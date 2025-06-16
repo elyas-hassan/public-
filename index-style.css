@@ -1,0 +1,554 @@
+/* General Styles - Modern & Eye-Comforting Theme */
+body {
+    background: linear-gradient(135deg, #1f2833 0%, #0a0a0a 100%); /* Softer dark gradient */
+    color: #e0e0e0; /* Lighter text for comfort */
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden !important;
+    overflow-y: auto;
+}
+
+/* Canvas background for a subtle digital effect */
+canvas#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Container with subtle glow and rounded borders */
+.container {
+    padding: 2rem;
+    border: 2px solid rgba(120, 180, 255, 0.4); /* Softer border color */
+    border-radius: 15px; /* More rounded */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(120, 180, 255, 0.2); /* Subtler shadow */
+    max-width: 700px; /* Slightly wider */
+    margin: 3rem auto;
+    background: rgba(20, 25, 30, 0.95); /* Darker, slightly transparent background */
+    position: relative;
+    z-index: 1;
+    box-sizing: border-box;
+    width: 90%;
+    backdrop-filter: blur(8px);
+    /* Removed glowBorder animation for less distraction. Re-add if desired with softer colors */
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 1.5rem auto;
+        padding: 1.5rem;
+        width: 95%;
+    }
+}
+
+.title {
+    text-align: center;
+    color: #64ffda; /* Pleasant accent color */
+    text-shadow: 0 0 8px rgba(100, 255, 218, 0.6); /* Subtler text shadow */
+    margin-bottom: 1.5rem;
+    font-size: 2.8rem;
+    letter-spacing: 2px;
+}
+
+.timer {
+    text-align: center;
+    font-size: 2.2rem;
+    color: #99ccee; /* Calming blue accent */
+    text-shadow: 0 0 8px rgba(153, 204, 238, 0.6); /* Subtler text shadow */
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    background: rgba(153, 204, 238, 0.08); /* More transparent background */
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    min-height: 40px;
+}
+
+/* Search Panel */
+.search-panel {
+    margin-top: 1.5rem;
+}
+
+#searchInput {
+    width: calc(100% - 2.4rem); /* Adjusted for padding and border */
+    padding: 1.1rem; /* Slightly more padding */
+    border: 2px solid #5588cc; /* Softer blue border */
+    background: rgb(25, 30, 35); /* Darker background */
+    color: #e0e0e0; /* Lighter text color */
+    border-radius: 10px; /* More rounded */
+    box-shadow: 0 0 10px rgba(85, 136, 204, 0.3); /* Subtler shadow */
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 1rem;
+}
+
+#searchInput:focus {
+    border-color: #64ffda; /* Accent color on focus */
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.5); /* Accent shadow on focus */
+}
+
+#resultsList {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+    max-height: 50vh;
+    overflow-y: auto;
+    border: 1px solid rgba(85, 136, 204, 0.2); /* Softer border */
+    border-radius: 8px;
+    background: rgba(20, 25, 30, 0.8); /* Slightly transparent background */
+}
+
+#resultsList li {
+    padding: 0.9rem 1.2rem; /* More padding */
+    border-bottom: 1px dashed rgba(85, 136, 204, 0.1); /* Soft dashed border */
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#resultsList li:last-child {
+    border-bottom: none;
+}
+
+#resultsList li:hover {
+    background: rgba(30, 35, 40, 0.8); /* Slightly lighter background on hover */
+}
+
+#resultsList li a {
+    color: #88bbee; /* Soft blue link color */
+    text-decoration: none;
+    display: block;
+    padding: 0;
+    border-radius: 4px;
+    transition: color 0.3s ease;
+    font-size: 1.05rem;
+    flex-grow: 1;
+}
+
+#resultsList li a:hover {
+    color: #64ffda; /* Accent color on link hover */
+}
+
+.no-results {
+    text-align: center;
+    color: #ff6347; /* Soft red for no results */
+    padding: 1rem;
+    font-style: italic;
+}
+
+/* Star Icon Styling */
+.favorite-star {
+    color: #a0a0a0; /* Muted gray for unfavorited state (CHANGED HERE) */
+    cursor: pointer;
+    font-size: 1.3rem; /* Slightly larger */
+    transition: color 0.2s ease, transform 0.2s ease, text-shadow 0.2s ease;
+    margin-left: 10px;
+}
+
+.favorite-star.favorited {
+    color: #ffd700; /* Gold when favorited */
+    text-shadow: 0 0 10px #ffd700, 0 0 15px rgba(255, 215, 0, 0.5); /* Enhanced shadow */
+    transform: scale(1.1);
+}
+
+.favorite-star:hover {
+    transform: scale(1.2);
+}
+
+/* User ID Display */
+.user-id-display {
+    position: fixed;
+    bottom: 15px; /* Slightly higher */
+    right: 15px; /* Slightly in from the right */
+    background: rgba(15, 20, 25, 0.7); /* Darker, more transparent */
+    color: #88bbee; /* Soft blue color */
+    padding: 10px 15px; /* More padding */
+    border-radius: 8px;
+    font-size: 0.9rem; /* Slightly larger font */
+    z-index: 10;
+    border: 1px solid #5588cc; /* Softer border */
+    box-shadow: 0 0 10px rgba(85, 136, 204, 0.3); /* Subtler shadow */
+    text-shadow: none; /* Remove harsh text shadow */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-id-text {
+    white-space: nowrap;
+}
+
+.auth-button {
+    background: #64ffda; /* Accent color for auth buttons */
+    color: #1f2833; /* Dark text on accent */
+    border: none;
+    padding: 8px 15px; /* More padding */
+    border-radius: 6px; /* Slightly more rounded */
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.auth-button:hover {
+    background: #4adcb6; /* Darker accent on hover */
+    transform: scale(1.05);
+}
+
+.auth-button.logout {
+    background: #ff66b2; /* Pink accent for logout */
+    color: #fff;
+}
+
+.auth-button.logout:hover {
+    background: #e64d99; /* Darker pink on hover */
+}
+
+/* Hamburger Button */
+.menu-toggle {
+    position: fixed;
+    top: 25px; /* Slightly lower */
+    left: 25px; /* Slightly right */
+    font-size: 2.5rem; /* Larger icon */
+    color: #64ffda; /* Accent color */
+    background-color: rgba(20, 25, 30, 0.7); /* More transparent background */
+    padding: 0.7rem 1.2rem; /* More padding */
+    border: 2px solid #64ffda; /* Accent border */
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.4); /* Subtler shadow */
+    z-index: 3;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.menu-toggle:hover {
+    background-color: rgba(30, 35, 40, 0.8); /* Slightly lighter background on hover */
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.6), 0 0 30px rgba(100, 255, 218, 0.3); /* Enhanced accent shadow */
+    transform: scale(1.05);
+}
+
+/* Side Menu */
+.side-menu {
+    position: fixed;
+    left: -300px; /* Matches new width */
+    top: 0;
+    width: 300px; /* Slightly wider */
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(15, 20, 25, 0.98), rgba(5, 10, 15, 0.98)); /* Darker, subtle gradient */
+    backdrop-filter: blur(10px);
+    transition: left 0.4s ease;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    border-right: 2px solid #64ffda; /* Accent border */
+}
+
+.side-menu.open {
+    left: 0;
+    box-shadow: 0 0 30px rgba(100, 255, 218, 0.5), inset 0 0 15px rgba(100, 255, 218, 0.2); /* Softer shadow */
+}
+
+.side-menu h2 {
+    color: #64ffda; /* Accent color */
+    border-bottom: 1px solid rgba(100, 255, 218, 0.5); /* Softer border */
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    font-size: 2.2rem; /* Slightly larger */
+    text-align: center;
+}
+
+.side-menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 2rem;
+}
+
+.side-menu li {
+    padding: 0.8rem 0;
+    cursor: pointer;
+    color: #e0e0e0; /* Lighter text color */
+    text-shadow: none; /* Removed for cleaner look */
+    transition: color 0.3s ease, text-shadow 0.3s ease;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.side-menu li i {
+    margin-right: 10px;
+    color: #88bbee; /* Soft blue icon color */
+}
+
+.side-menu li:hover {
+    color: #64ffda; /* Accent color on hover */
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(100, 255, 218, 0.5); /* Subtle accent shadow */
+}
+
+.side-menu .close-btn {
+    position: absolute;
+    top: 20px; /* Slightly lower */
+    right: 20px; /* Slightly in */
+    font-size: 2.5rem; /* Larger icon */
+    color: #ff66b2; /* Pink accent */
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.side-menu .close-btn:hover {
+    color: #64ffda; /* Accent color on hover */
+    transform: rotate(90deg);
+}
+
+.last-edited {
+    color: #a0a0a0; /* Softer gray */
+    font-size: 0.85rem;
+    text-align: center;
+    margin-top: 3rem;
+    border-top: 1px solid #333;
+    padding-top: 1rem;
+    text-shadow: none; /* Removed for cleaner look */
+}
+
+/* Side Menu Burst Animation - keep if desired, but can be distracting */
+/* @keyframes cornerBurst {
+    0% { box-shadow: 0 0 0 #ff0000, 0 0 0 #00ff00, 0 0 0 #0000ff, 0 0 0 #ffff00; }
+    50% { box-shadow: -20px -20px 40px #ff0000, 20px -20px 40px #00ff00,
+                        -20px 20px 40px #0000ff, 20px 20px 40px #ffff00; }
+    100% { box-shadow: none; }
+}
+.side-menu.burst {
+    animation: cornerBurst 0.6s ease-out;
+} */
+
+/* Login/Signup Modal Styles */
+.auth-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75); /* Slightly less transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.auth-modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.auth-modal-content {
+    background: rgba(20, 25, 30, 0.98); /* Darker, transparent background */
+    border: 2px solid #64ffda; /* Accent border */
+    border-radius: 12px;
+    box-shadow: 0 0 25px rgba(100, 255, 218, 0.4), 0 0 40px rgba(100, 255, 218, 0.1); /* Softer, layered shadow */
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    animation: fadeInScale 0.3s ease-out;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.auth-modal-content h2 {
+    text-align: center;
+    color: #88bbee; /* Soft blue heading */
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.auth-modal-content .close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 1.8rem;
+    color: #ff66b2; /* Pink accent */
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.auth-modal-content .close-btn:hover {
+    color: #64ffda; /* Accent color on hover */
+}
+
+.auth-form-group {
+    margin-bottom: 1rem;
+}
+
+.auth-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #88bbee; /* Soft blue label */
+    font-weight: bold;
+}
+
+.auth-form-group input {
+    width: calc(100% - 1.6rem);
+    padding: 0.8rem;
+    border: 1px solid #5588cc; /* Softer blue border */
+    border-radius: 6px;
+    background: #1a2025; /* Darker input background */
+    color: #e0e0e0; /* Lighter text color */
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-form-group input:focus {
+    border-color: #64ffda; /* Accent color on focus */
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.4); /* Accent shadow on focus */
+}
+
+.auth-modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+.auth-modal-buttons button {
+    flex: 1;
+    padding: 0.9rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+#signInBtn {
+    background: #64ffda; /* Accent color */
+    color: #1f2833; /* Dark text */
+}
+
+#signInBtn:hover {
+    background: #4adcb6; /* Darker accent on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+}
+
+#signUpBtn {
+    background: #88bbee; /* Soft blue accent */
+    color: #1f2833; /* Dark text */
+}
+
+#signUpBtn:hover {
+    background: #77aadf; /* Darker soft blue on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(136, 187, 238, 0.3);
+}
+
+.auth-modal-buttons button.active-auth-button {
+    border: 2px solid #64ffda; /* Accent border */
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.5); /* Accent shadow */
+}
+
+.auth-modal-buttons button.inactive-auth-button {
+    opacity: 0.5;
+    cursor: not-allowed;
+    border: 1px solid #555;
+    background: #333;
+    box-shadow: none;
+}
+
+.auth-message {
+    color: #ff66b2; /* Pink accent for messages */
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    min-height: 20px;
+}
+
+#verificationMessage {
+    color: #ffcc00; /* Yellow for warning/verification */
+    font-weight: bold;
+    margin-top: 0.5rem;
+}
+
+.toggle-auth-mode {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #a0a0a0; /* Softer gray */
+    font-size: 0.9rem;
+}
+
+.toggle-auth-mode a {
+    color: #88bbee; /* Soft blue link */
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.toggle-auth-mode a:hover {
+    color: #64ffda; /* Accent color on hover */
+}
+
+#forgotPasswordBtn, #resendVerificationBtn {
+    display: block;
+    text-align: center;
+    margin-top: 1rem;
+    color: #ff66b2; /* Pink accent */
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.3s ease;
+}
+
+#forgotPasswordBtn:hover, #resendVerificationBtn:hover {
+    color: #64ffda; /* Accent color on hover */
+}
+
+#resendVerificationBtn {
+    display: none;
+}
+
+.hidden-initial {
+    display: none;
+}
+
+/* Highlighted (Favorited) Result */
+#resultsList li.favorited-result {
+    background-color: rgba(255, 215, 0, 0.1); /* Subtle gold background */
+    box-shadow: inset 0 0 8px rgba(255, 215, 0, 0.3); /* Subtle gold inner shadow */
+}
+
+/* Clicked Result */
+#resultsList li.clicked-result {
+    background-color: rgba(0, 255, 0, 0.1); /* Subtle green background */
+    box-shadow: inset 0 0 8px rgba(0, 255, 0, 0.3); /* Subtle green inner shadow */
+}
+
+/* New/Adjusted Animations */
+@keyframes fadeInScale {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Remove glowBorder animation or make it very subtle if still desired */
+/* @keyframes glowBorder {
+    0% { border-color: rgba(120, 180, 255, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(120, 180, 255, 0.2); }
+    50% { border-color: rgba(100, 255, 218, 0.6); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 25px rgba(100, 255, 218, 0.4); }
+    100% { border-color: rgba(120, 180, 255, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px rgba(120, 180, 255, 0.2); }
+} */

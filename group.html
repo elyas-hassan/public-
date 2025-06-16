@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang=en>
+<head>
+    <meta charset=UTF-8>
+    <meta content="width=device-width,initial-scale=1" name=viewport>
+    <title>KAU WhatsApp Groups</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel=stylesheet>
+<link rel="stylesheet" href="group-style.css">
+
+</head>
+<body>
+    <canvas id="KAUCanvas"></canvas> <a class=back-to-main href=index.html>Back to Main</a>
+    <header><h1>KAU WhatsApp Groups Explorer</h1></header>
+    <main id=mainContent>
+        <div class="department-list fade-in" id=departmentList>
+            <div class=card onclick='selectDepartment("كلية الحاسبات")'>كلية الحاسبات</div>
+            <div class=card onclick='selectDepartment("كلية الاقتصاد والإدارة")'>كلية الاقتصاد والإدارة</div>
+            <div class=card onclick='selectDepartment("كلية الآداب والعلوم الإنسانية")'>كلية الآداب والعلوم الإنسانية</div>
+            <div class=card onclick='selectDepartment("كلية العلوم")'>كلية العلوم</div>
+        </div>
+    </main>
+    <script type=module>
+        // Import the necessary Firebase instances and functions from firebase-init.js
+        import { db, initializeFirebase, universityStructure } from './js/firebase-init.js';
+        import { collection, query, where, getDocs, addDoc } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js';
+
+        initializeFirebase();
+
+        const auth = getAuth();
+
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                alert('You must be logged in to view this page.');
+                window.location.href = 'index.html';
+            } else {
+                console.log('User is logged in:', user.email);
+            }
+        });
+
+        const mainContent = document.getElementById('mainContent');
+        const departments = universityStructure;
+        let mockGroups = {};
+        let currentDepartment = '';
+        let currentCategory = '';
+
+        function transitionContent(newContentHTML, callback) {
+            mainContent.classList.add('fade-out');
+            mainContent.addEventListener('transitionend', function handler() {
+                mainContent.innerHTML = newContentHTML;
+                mainContent.classList.remove('fade-out');
+                mainContent.classList.add('fade-in');
+                mainContent.removeEventListener('transitionend', handler);
+
+                setTimeout(() => {
+                    mainContent.classList.remove('fade-in');
+                    if (callback) callback();
+                }, 300);
+            }, { once: true }); // Use { once: true } to automatically remove listener after it fires
+        }
+
+        async function selectDepartment(dept) {
+            currentDepartment = dept;
+            const newContentHTML = `
+                <h2 style="text-align:center; color:#00ffff;">${dept}</h2>
+                <div class="course-list">
+                    ${Object.keys(departments[dept]).map(cat => `<div class="card" onclick="selectCourse('${dept}', '${cat}')">${cat}</div>`).join('')}
+                </div>
+                <div style="text-align:center;">
+                    <button class="back-btn" onclick="location.reload()">Back</button>
+                </div>
+            `;
+            transitionContent(newContentHTML);
+        }
+
+        async function selectCourse(dept, category) {
+            currentDepartment = dept;
+            currentCategory = category;
+
+            // 1. Immediately display loading state
+            const loadingHTML = `
+                <h2 style="text-align:center; color:#39ff14;">${dept} - ${category}</h2>
+                <div style="text-align:center;">
+                    <p>Loading groups...</p>
+                    <div class="loading-spinner"></div>
+                </div>
+                <div style="text-align:center; margin-top: 2rem;">
+                    <button class="back-btn" onclick="selectDepartment('${dept}')">Back to ${dept}</button>
+                </div>
+            `;
+            transitionContent(loadingHTML); // Transition to the loading state
+
+            // 2. Fetch groups asynchronously
+            await fetchGroups(dept, category);
+
+            // 3. Render the actual group list after data is fetched
+            renderGroupList(dept, category);
+        }
+
+        async function fetchGroups(dept, category) {
+    if (!mockGroups[dept]) mockGroups[dept] = {};
+    mockGroups[dept][category] = [];
+
+    // Try fetching from GitHub JSON first
+    try {
+        const response = await fetch('https://blackgamer2121.github.io/heelo/groups-data.json'); // Replace with your real link
+        const data = await response.json();
+
+        if (data[dept] && data[dept][category]) {
+            mockGroups[dept][category] = data[dept][category];
+            console.log("Groups loaded from GitHub JSON");
+            return;
+        }
+    } catch (error) {
+        console.warn("Failed to load from GitHub:", error);
+    }
+
+    // Fallback to Firestore
+    try {
+        const groupsQuery = query(
+            collection(db, 'groups'),
+            where('department', '==', dept),
+            where('category', '==', category)
+        );
+        const snapshot = await getDocs(groupsQuery);
+        snapshot.forEach(doc => {
+            mockGroups[dept][category].push(doc.data());
+        });
+        console.log("Groups loaded from Firebase");
+    } catch (error) {
+        console.error("Firebase error:", error);
+        alert("Could not load groups. Please check your connection.");
+    }
+}
+
+        function renderGroupList(dept, category) {
+            const groups = (mockGroups[dept] && mockGroups[dept][category]) || [];
+            let groupsTableHTML = '';
+
+            if (groups.length) {
+                groupsTableHTML = `
+                    <table class="group-table">
+                        <thead>
+                            <tr>
+                                <th>رقم الشعبة</th>
+                                <th>الرابط</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${groups.map(g => `
+                                <tr>
+                                    <td>${g.id}</td>
+                                    <td><a href="${g.link}" target="_blank">انضم إلى المجموعة</a></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } else {
+                groupsTableHTML = `<p>لا توجد مجموعات حتى الآن. أضف واحدة أدناه!</p>`;
+            }
+
+            const newContentHTML = `
+                <h2 style="text-align:center; color:#39ff14;">${dept} - ${category}</h2>
+                <div class="group-section">
+                    ${groupsTableHTML}
+                    <button class="add-btn" onclick="showAddGroupForm()">أضف مجموعة</button>
+                    <div>
+                        <button class="back-btn" onclick="selectDepartment('${dept}')">العودة إلى ${dept}</button>
+                    </div>
+                </div>
+            `;
+            transitionContent(newContentHTML);
+        }
+
+        function showAddGroupForm() {
+            const formHTML = `
+                <div class="add-group-form">
+                    <h3>أضف مجموعة جديدة</h3>
+                    <input type="text" id="groupId" placeholder="رقم الشعبة (مثال: CPCS202)" />
+                    <input type="url" id="groupLink" placeholder="رابط مجموعة الواتساب" />
+                    <button onclick="addNewGroup()">أضف المجموعة</button>
+                    <button class="back-btn" onclick="renderGroupList(currentDepartment, currentCategory)">إلغاء</button>
+                </div>
+            `;
+            transitionContent(formHTML);
+        }
+
+        async function addNewGroup() {
+            const groupId = document.getElementById('groupId').value;
+            const groupLink = document.getElementById('groupLink').value;
+
+            if (!groupId || !groupLink) {
+                alert('الرجاء إدخال رقم الشعبة ورابط مجموعة الواتساب.');
+                return;
+            }
+
+            const newGroup = {
+                department: currentDepartment,
+                category: currentCategory,
+                id: groupId,
+                link: groupLink
+            };
+
+            try {
+                await addDoc(collection(db, 'groups'), newGroup);
+		const day = new Date().getDate().toString();
+                console.log("Document successfully written!");
+
+                if (!mockGroups[currentDepartment]) {
+                    mockGroups[currentDepartment] = {};
+                }
+                if (!mockGroups[currentDepartment][currentCategory]) {
+                    mockGroups[currentDepartment][currentCategory] = [];
+                }
+                mockGroups[currentDepartment][currentCategory].push(newGroup);
+
+                alert(`تمت إضافة المجموعة "${groupId}" بنجاح!`);
+                renderGroupList(currentDepartment, currentCategory);
+            } catch (error) {
+                console.error("Error writing document to Firebase: ", error);
+                alert("فشل في إضافة المجموعة. الرجاء التحقق من إعداد Firebase واتصالك بالإنترنت.");
+            }
+        }
+
+        // --- KAUCanvas Background Animation Script ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('KAUCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            const numParticles = 80; // Adjust as needed
+            const maxDistance = 100; // Max distance for lines to connect
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            class Particle {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.vx = (Math.random() - 0.5) * 0.5; // Slower movement
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.radius = Math.random() * 1.5 + 0.5; // Smaller particles
+                    this.color = 'rgba(57, 255, 20, 0.6)'; // Neon green/blue, can be adjusted for KAU brand
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // Bounce off edges
+                    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push(new Particle(Math.random() * canvas.width, Math.random() * canvas.height));
+                }
+            }
+
+            function animate() {
+                requestAnimationFrame(animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+
+                    // Draw lines between nearby particles
+                    for (let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < maxDistance) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(0, 255, 255, ${1 - (distance / maxDistance)})`; // Neon blue, fades with distance
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            initParticles();
+            animate();
+        });
+        // --- End KAUCanvas Background Animation Script ---
+
+
+        window.selectDepartment = selectDepartment;
+        window.selectCourse = selectCourse;
+        window.showAddGroupForm = showAddGroupForm;
+        window.addNewGroup = addNewGroup;
+        window.renderGroupList = renderGroupList;
+    </script>
+</body>
+</html>

@@ -1,0 +1,254 @@
+html {
+    font-size: 16px;
+}
+@media (max-width: 600px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+        body {
+            margin: 0;
+            font-family: Inter, sans-serif;
+            /* Using a static background for body, let the canvas handle the dynamic part */
+            background: linear-gradient(135deg, #1f2833 0%, #0a0a0a 100%); /* Consistent with index.html */
+            color: #e0e0e0; /* Softer white */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto; /* Ensure vertical scrolling is allowed */
+        }
+	body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.6); /* Optional: dark overlay on canvas - keep if desired */
+}
+
+
+        /* Canvas will be the dynamic background */
+        canvas#KAUCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* Ensure it's behind everything else */
+            display: block;
+        }
+
+        /* Existing styles from your provided code */
+        header{text-align:center;margin-top:2rem}
+        header h1{
+            font-size:2.5rem;
+            color:#64ffda; /* Main accent color */
+            text-shadow:0 0 8px rgba(100, 255, 218, 0.6); /* Subtler glow */
+            /* Removed neon-glow animation for eye comfort */
+        }
+        .course-list,.department-list{margin-top:2rem;display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem}
+.card {
+    background: rgba(20, 25, 30, 0.95); /* Darker, slightly transparent */
+    border: 2px solid rgba(120, 180, 255, 0.4); /* Softer blue border */
+    padding: 1rem 1.5rem;
+    border-radius: 12px; /* More rounded */
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Add background to transition */
+    flex: 1 1 180px;
+    max-width: 250px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtler shadow */
+}
+.card:hover {
+    background: rgba(30, 35, 40, 0.95); /* Slightly lighter dark on hover */
+    box-shadow: 0 0 15px rgba(120, 180, 255, 0.6); /* Enhanced soft blue shadow */
+    transform: translateY(-5px);
+}
+
+        /* Redundant .card:hover rule removed */
+        /* .card:hover{background:#2a2a2a;box-shadow:0 0 12px #0ff} */
+
+        .back-btn{
+            margin-top:2rem;
+            padding:.7rem 1.2rem; /* More padding */
+            background:transparent; /* No background */
+            border:2px solid #88bbee; /* Soft blue accent */
+            color:#88bbee; /* Soft blue accent */
+            border-radius:8px; /* More rounded */
+            cursor:pointer;
+            transition:all .3s ease;
+            box-shadow:0 0 8px rgba(136, 187, 238, 0.4); /* Subtle shadow */
+        }
+        .back-btn:hover{
+            background:#88bbee; /* Soft blue background on hover */
+            color:#1f2833; /* Dark text on hover */
+            box-shadow:0 0 15px rgba(136, 187, 238, 0.7); /* Enhanced shadow on hover */
+        }
+        .group-section{margin-top:2rem;text-align:center}
+        /* New table styles for groups */
+        .group-table {
+            width: 90%;
+            max-width: 600px;
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+            background-color: rgba(20, 25, 30, 0.9); /* Darker, slightly transparent */
+            border: 1px solid rgba(120, 180, 255, 0.3); /* Softer border */
+            border-radius: 10px; /* More rounded */
+            overflow: hidden; /* Ensures border-radius applies to corners */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4); /* Added shadow */
+        }
+        .group-table th, .group-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(120, 180, 255, 0.2); /* Softer border */
+            text-align: left;
+            color: #e0e0e0; /* Lighter text */
+		word-wrap: break-word;
+
+        }
+        .group-table th {
+            background-color: rgba(15, 20, 25, 0.95); /* Darker background */
+            color: #99ccee; /* Soft blue accent */
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.05em;
+        }
+        .group-table tbody tr:hover {
+            background-color: rgba(30, 35, 40, 0.8); /* Slightly lighter background on hover */
+        }
+        .group-table a {
+            color: #64ffda; /* Main accent color for links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .group-table a:hover {
+            color: #88bbee; /* Secondary accent on hover */
+        }
+        .group-table td:last-child {
+            text-align: center; /* Center the link column if preferred */
+        }
+
+        .group-list li{margin:.5rem 0;color:#ccc} /* This specific rule for ul li is no longer strictly needed but kept for safety */
+        .group-list a{
+            color:#64ffda; /* Main accent color */
+            text-decoration:none;
+            transition:color .3s ease
+        }
+        .group-list a:hover{
+            color:#88bbee; /* Secondary accent on hover */
+        }
+        .add-btn{
+            margin-top:1rem;
+            padding:.7rem 1.5rem; /* More padding */
+            background:#ff66b2; /* Pink accent */
+            border:none;
+            border-radius:8px; /* More rounded */
+            color:#1f2833; /* Dark text */
+            font-weight:700;
+            cursor:pointer;
+            transition:all .3s ease;
+            box-shadow:0 5px 15px rgba(255, 102, 178, 0.3); /* Soft shadow */
+        }
+        .add-btn:hover{
+            background:#e64d99; /* Darker pink */
+            box-shadow:0 0 15px rgba(255, 102, 178, 0.6); /* Enhanced pink shadow */
+        }
+        .back-to-main{
+            position:absolute;
+            top:20px;
+            left:20px;
+            padding:10px 15px;
+            background:transparent; /* No background */
+            border:2px solid #88bbee; /* Soft blue accent */
+            color:#88bbee; /* Soft blue accent */
+            border-radius:8px;
+            cursor:pointer;
+            text-decoration:none;
+            font-weight:700;
+            transition:all .3s ease;
+            box-shadow:0 0 10px rgba(136, 187, 238, 0.4); /* Soft shadow */
+        }
+        .back-to-main:hover{
+            background:#88bbee; /* Soft blue background on hover */
+            color:#1f2833; /* Dark text on hover */
+            box-shadow:0 0 20px rgba(136, 187, 238, 0.8); /* Enhanced shadow on hover */
+        }
+        .add-group-form{
+            margin-top:1.5rem;
+            background:rgba(20, 25, 30, 0.95); /* Darker, slightly transparent */
+            padding:1.5rem;
+            border-radius:12px; /* More rounded */
+            border:1px solid rgba(120, 180, 255, 0.3); /* Softer border */
+            display:flex;
+            flex-direction:column;
+            gap:1rem;
+            align-items:center;
+            box-shadow:0 5px 15px rgba(0, 0, 0, 0.4); /* Added shadow */
+            width: 90%; /* Responsive width */
+            max-width: 450px; /* Max width for form */
+            box-sizing: border-box; /* Include padding in width */
+        }
+        .add-group-form input[type=text],.add-group-form input[type=url]{
+            padding:.8rem; /* More padding */
+            border-radius:6px; /* More rounded */
+            border:1px solid #5588cc; /* Softer blue border */
+            background:#1a2025; /* Darker background */
+            color:#e0e0e0; /* Lighter text */
+            width:calc(100% - 1.6rem); /* Adjust for padding */
+            max-width:350px; /* Increased max-width */
+            font-size:1rem;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .add-group-form input[type=text]:focus, .add-group-form input[type=url]:focus {
+            border-color: #64ffda; /* Accent color on focus */
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.4); /* Accent shadow on focus */
+        }
+        .add-group-form button{
+            padding:.8rem 1.8rem; /* More padding */
+            background:#64ffda; /* Main accent color */
+            border:none;
+            border-radius:8px; /* More rounded */
+            color:#1f2833; /* Dark text */
+            font-weight:700;
+            cursor:pointer;
+            transition:all .3s ease;
+            font-size:1.05rem;
+            box-shadow:0 5px 15px rgba(100, 255, 218, 0.3); /* Soft shadow */
+        }
+        .add-group-form button:hover{
+            background:#4adcb6; /* Darker accent on hover */
+            box-shadow:0 0 15px rgba(100, 255, 218, 0.6); /* Enhanced accent shadow */
+        }
+        .fade-out{opacity:0;transition:opacity .2s ease-out}
+        .fade-in{opacity:1;transition:opacity .3s ease-in}
+        .loading-spinner{
+            border:4px solid rgba(120, 180, 255, 0.3); /* Softer color */
+            border-top:4px solid #88bbee; /* Accent color */
+            border-radius:50%;
+            width:40px;
+            height:40px;
+            animation:spin 1s linear infinite;
+            margin-top:2rem
+        }
+        @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+/* Removed neon-glow animation for header h1 */
+/* @keyframes neon-glow {
+    0%, 100% { text-shadow: 0 0 10px #39ff14; }
+    50% { text-shadow: 0 0 20px #39ff14; }
+}
+header h1 {
+    animation: neon-glow 2s ease-in-out infinite;
+} */
+a:focus,
+button:focus {
+    outline: 2px dashed #64ffda; /* Accent color for focus outline */
+    outline-offset: 4px;
+}
+* {
+    will-change: transform, opacity;
+}

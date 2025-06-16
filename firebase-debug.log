@@ -1,0 +1,93 @@
+[debug] [2025-06-13T16:07:10.642Z] ----------------------------------------------------------------------
+[debug] [2025-06-13T16:07:10.645Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\elyas's\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2025-06-13T16:07:10.645Z] CLI Version:   14.4.0
+[debug] [2025-06-13T16:07:10.646Z] Platform:      win32
+[debug] [2025-06-13T16:07:10.646Z] Node Version:  v22.16.0
+[debug] [2025-06-13T16:07:10.646Z] Time:          Fri Jun 13 2025 19:07:10 GMT+0300 (Arabian Standard Time)
+[debug] [2025-06-13T16:07:10.646Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-13T16:07:10.845Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-13T16:07:10.846Z] > authorizing via signed-in user (elyashkb3@gmail.com)
+[debug] [2025-06-13T16:07:10.846Z] [iam] checking project nothingimport for permissions ["firebase.projects.get"]
+[debug] [2025-06-13T16:07:10.847Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:10.847Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:10.848Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport:testIamPermissions [none]
+[debug] [2025-06-13T16:07:10.848Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport:testIamPermissions x-goog-quota-user=projects/nothingimport
+[debug] [2025-06-13T16:07:10.848Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-06-13T16:07:11.806Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport:testIamPermissions 200
+[debug] [2025-06-13T16:07:11.806Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport:testIamPermissions {"permissions":["firebase.projects.get"]}
+[debug] [2025-06-13T16:07:11.807Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:11.807Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:11.807Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/nothingimport/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-06-13T16:07:11.807Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/nothingimport/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/nothingimport
+[debug] [2025-06-13T16:07:12.880Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/nothingimport/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-06-13T16:07:12.880Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/nothingimport/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-06-13T16:07:12.880Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:12.881Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:12.881Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport [none]
+[debug] [2025-06-13T16:07:13.132Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport 200
+[debug] [2025-06-13T16:07:13.133Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/nothingimport {"projectNumber":"885578844902","projectId":"nothingimport","lifecycleState":"ACTIVE","name":"My Research Hub","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-05-25T22:56:14.084553Z"}
+[info] 
+[info] === Serving from 'C:\Users\elyas's\Desktop\thewebsite'...
+[info] 
+[debug] [2025-06-13T16:07:13.136Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:13.136Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:13.146Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/nothingimport/sites 
+[debug] [2025-06-13T16:07:13.184Z] defaultcredentials: writing to file C:\Users\elyas's\AppData\Roaming\firebase\elyashkb3_gmail_com_application_default_credentials.json
+[debug] [2025-06-13T16:07:13.185Z] Setting GAC to C:\Users\elyas's\AppData\Roaming\firebase\elyashkb3_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to C:\\Users\\elyas's\\AppData\\Roaming\\firebase\\elyashkb3_gmail_com_application_default_credentials.json"}}
+[debug] [2025-06-13T16:07:13.186Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:13.186Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:13.186Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport/adminSdkConfig [none]
+[debug] [2025-06-13T16:07:13.635Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport/adminSdkConfig 200
+[debug] [2025-06-13T16:07:13.635Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport/adminSdkConfig {"projectId":"nothingimport","storageBucket":"nothingimport.firebasestorage.app"}
+[debug] [2025-06-13T16:07:14.567Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/nothingimport/sites 200
+[debug] [2025-06-13T16:07:14.567Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/nothingimport/sites {"sites":[{"name":"projects/nothingimport/sites/nothingimport","defaultUrl":"https://nothingimport.web.app","type":"DEFAULT_SITE"}]}
+[debug] [2025-06-13T16:07:14.568Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:14.568Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:14.568Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport/webApps/-/config [none]
+[debug] [2025-06-13T16:07:15.196Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport/webApps/-/config 200
+[debug] [2025-06-13T16:07:15.197Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport/webApps/-/config {"projectId":"nothingimport","appId":"1:885578844902:web:db57e1b17fe885fdb0c927","storageBucket":"nothingimport.firebasestorage.app","apiKey":"AIzaSyCmzYS-OnZYxtpDgmM8v5ozVrSPhs3Pwe0","authDomain":"nothingimport.firebaseapp.com","messagingSenderId":"885578844902","measurementId":"G-Z6SZE9HBCG"}
+[debug] [2025-06-13T16:07:15.218Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:15.218Z] Checked if tokens are valid: true, expires at: 1749832079015
+[debug] [2025-06-13T16:07:15.219Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport [none]
+[debug] [2025-06-13T16:07:15.570Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport 200
+[debug] [2025-06-13T16:07:15.571Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/nothingimport {"projectId":"nothingimport","projectNumber":"885578844902","displayName":"My Research Hub","name":"projects/nothingimport","resources":{"hostingSite":"nothingimport"},"state":"ACTIVE","etag":"1_ca424170-eacc-4870-bb27-bb7151ffd461"}
+[info] i  functions: Watching "C:\Users\elyas's\Desktop\thewebsite\functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"C:\\Users\\elyas's\\Desktop\\thewebsite\\functions\" for Cloud Functions..."}}
+[info] i  hosting[nothingimport]: Serving hosting files from: public {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mpublic\u001b[22m"}}
+[info] +  hosting[nothingimport]: Local server: http://localhost:5000 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://localhost:5000\u001b[22m\u001b[24m"}}
+[debug] [2025-06-13T16:07:15.619Z] Validating nodejs source
+[debug] [2025-06-13T16:07:16.705Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2025-06-13T16:07:16.705Z] Building nodejs source
+[debug] [2025-06-13T16:07:16.706Z] Failed to find version of module node: reached end of search path C:\Users\elyas's\Desktop\thewebsite\functions\node_modules
+[info] +  functions: Using node@22 from host. 
+[debug] [2025-06-13T16:07:16.707Z] Could not find functions.yaml. Must use http discovery
+[debug] [2025-06-13T16:07:16.713Z] Found firebase-functions binary at 'C:\Users\elyas's\Desktop\thewebsite\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8868
+
+[debug] [2025-06-13T16:07:17.168Z] Got response from /__/functions.yaml {"endpoints":{},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{}}
+[info] +  functions: Loaded functions definitions from source: . {"metadata":{"emulator":{"name":"functions"},"message":"Loaded functions definitions from source: ."}}
