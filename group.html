@@ -103,7 +103,7 @@
 
     // Try fetching from GitHub JSON first
     try {
-        const response = await fetch('https://blackgamer2121.github.io/heelo/groups-data.json'); // Replace with your real link
+        const response = await fetch('https://elyas-hassan.github.io/fiels/groups-data.json'); // Replace with your real link
         const data = await response.json();
 
         if (data[dept] && data[dept][category]) {
@@ -186,42 +186,51 @@
             transitionContent(formHTML);
         }
 
-        async function addNewGroup() {
-            const groupId = document.getElementById('groupId').value;
-            const groupLink = document.getElementById('groupLink').value;
+async function addNewGroup() {
+    const groupId = document.getElementById('groupId').value;
+    const groupLink = document.getElementById('groupLink').value;
 
-            if (!groupId || !groupLink) {
-                alert('الرجاء إدخال رقم الشعبة ورابط مجموعة الواتساب.');
-                return;
-            }
+    if (!groupId || !groupLink) {
+        alert('الرجاء إدخال رقم الشعبة ورابط مجموعة الواتساب.');
+        return;
+    }
 
-            const newGroup = {
-                department: currentDepartment,
-                category: currentCategory,
-                id: groupId,
-                link: groupLink
-            };
+    const newGroup = {
+        department: currentDepartment,
+        category: currentCategory,
+        id: groupId,
+        link: groupLink
+    };
 
-            try {
-                await addDoc(collection(db, 'groups'), newGroup);
-		const day = new Date().getDate().toString();
-                console.log("Document successfully written!");
+    try {
+        const response = await fetch("https://kau-ecs75iswv-elyas-projects-e5a8ddda.vercel.app/api/add-group", { // ⬅️ replace this with your real URL
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(newGroup)
+        });
 
-                if (!mockGroups[currentDepartment]) {
-                    mockGroups[currentDepartment] = {};
-                }
-                if (!mockGroups[currentDepartment][currentCategory]) {
-                    mockGroups[currentDepartment][currentCategory] = [];
-                }
-                mockGroups[currentDepartment][currentCategory].push(newGroup);
-
-                alert(`تمت إضافة المجموعة "${groupId}" بنجاح!`);
-                renderGroupList(currentDepartment, currentCategory);
-            } catch (error) {
-                console.error("Error writing document to Firebase: ", error);
-                alert("فشل في إضافة المجموعة. الرجاء التحقق من إعداد Firebase واتصالك بالإنترنت.");
-            }
+        if (!response.ok) {
+            throw new Error("Failed to submit group");
         }
+
+        // Add it to local memory so it shows up immediately
+        if (!mockGroups[currentDepartment]) {
+            mockGroups[currentDepartment] = {};
+        }
+        if (!mockGroups[currentDepartment][currentCategory]) {
+            mockGroups[currentDepartment][currentCategory] = [];
+        }
+        mockGroups[currentDepartment][currentCategory].push(newGroup);
+
+        alert(`تمت إضافة المجموعة "${groupId}" بنجاح!`);
+        renderGroupList(currentDepartment, currentCategory);
+
+    } catch (error) {
+        console.error("Error writing to GitHub API: ", error);
+        alert("فشل في إضافة المجموعة إلى GitHub. تأكد من أن الخادم يعمل بشكل صحيح.");
+    }
+}
+
 
         // --- KAUCanvas Background Animation Script ---
         document.addEventListener('DOMContentLoaded', () => {
