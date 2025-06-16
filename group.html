@@ -103,7 +103,7 @@
 
     // Try fetching from GitHub JSON first
     try {
-        const response = await fetch('https://elyas-hassan.github.io/fiels/groups-data.json'); // Replace with your real link
+        const response = await fetch('https://elyas-hassan.github.io/public-/groups-data.json'); // Replace with your real link
         const data = await response.json();
 
         if (data[dept] && data[dept][category]) {
